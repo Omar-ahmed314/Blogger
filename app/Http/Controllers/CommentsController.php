@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
-class PostsController extends Controller
+class CommentsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $posts = Post::all();
-        $response = ['posts' => $posts];
+        $comments = Comment::all();
+        $response = ['comments' => $comments];
         return response()->json($response);
     }
 
@@ -22,13 +22,11 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-
-        $post = Post::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'numberOfLikes' => $request->numberOfLikes
+        $comment = Comment::create([
+            'comment' => $request->comment,
+            'numberOfVotes' => $request->numberOfVotes
         ]);
-        $response = ['message' => "Created Successfully", 'post', $post];
+        $response = ['message' => "Comment Created Successfully", 'comment' => $comment];
         return response()->json($response, 201);
     }
 
@@ -37,8 +35,8 @@ class PostsController extends Controller
      */
     public function show(string $id)
     {
-        $post = Post::findOrFail($id);
-        $response = ['post' => $post];
+        $comment = Comment::findOrFail($id);
+        $response = ['comment' => $comment];
         return response()->json($response);
     }
 
@@ -47,9 +45,9 @@ class PostsController extends Controller
      */
     public function update(Request $request)
     {
-        $post = Post::findOrFail($request->id);
-        $post->update($request->all());
-        $response = ['message' => "Updated Successfully", 'post' => $post];
+        $comment = Comment::findOrFail($request->id);
+        $comment->update($request->all());
+        $response = ['message' => "Comment Updated Successfully", 'comment' => $comment];
         return response()->json($response);
     }
 
@@ -58,9 +56,9 @@ class PostsController extends Controller
      */
     public function destroy(string $id)
     {
-        $post = Post::findOrFail($id);
-        $post->delete();
-        $response = ['message' => "Deleted Successfully", 'post' => $post];
+        $comment = Comment::findOrFail($id);
+        $comment->delete();
+        $response = ['message' => "Comment Deleted Successfully", 'comment' => $comment];
         return response()->json($response);
     }
 }
