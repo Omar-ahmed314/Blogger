@@ -16,6 +16,7 @@ Route::post('/post', [PostsController::class, 'store']);
 Route::get('/post/{id}', [PostsController::class, 'show']);
 Route::put('/post', [PostsController::class, 'update']);
 Route::delete('/post/{id}', [PostsController::class, 'destroy']);
+Route::get('/post/{id}/comment', [PostsController::class, 'getComments']);
 
 // comments routes
 Route::get('/comment', [CommentsController::class, 'index']);

@@ -55,6 +55,16 @@ class PostsController extends Controller
     }
 
     /**
+     * Return all comments belongs to a specific post
+     */
+    public function getComments($id)
+    {
+        $comments = Post::find($id)->comments;
+        $response = ["comments" => $comments];
+        return response()->json($response);
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
