@@ -24,6 +24,7 @@ class CommentsController extends Controller
     public function store(CommentRequest $request)
     {
         $comment = Comment::create([
+            'post_id' => $request->postId,
             'comment' => $request->comment,
             'numberOfVotes' => $request->numberOfVotes
         ]);
