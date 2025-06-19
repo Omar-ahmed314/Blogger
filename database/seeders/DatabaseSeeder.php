@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Post;
+use App\Models\Comment;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,11 +13,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Create 10 posts with random data
+        for ($i = 0; $i < 10; $i++) {
+            $post = Post::create([
+                'title' => fake()->sentence(4),
+                'description' => fake()->paragraphs(2, true),
+                'numberOfLikes' => fake()->numberBetween(0, 1000)
+            ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+            // Create 10 comments for each post
+            for ($j = 0; $j < 10; $j++) {
+                Comment::create([
+                    'post_id' => $post->id,
+                    'comment' => fake()->sentences(2, true),
+                    'numberOfVotes' => fake()->numberBetween(-50, 100)
+                ]);
+            }
+        }
     }
 }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
             // $table->string('userId');
             $table->string('title');
-            $table->string('description');
+            $table->text('description'); // changed from string to text for large content
             $table->integer('numberOfLikes');
         });
     }
