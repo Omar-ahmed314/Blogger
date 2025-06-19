@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,7 @@ class CommentsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CommentRequest $request)
     {
         $comment = Comment::create([
             'comment' => $request->comment,
@@ -43,7 +44,7 @@ class CommentsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(CommentRequest $request)
     {
         $comment = Comment::findOrFail($request->id);
         $comment->update($request->all());
