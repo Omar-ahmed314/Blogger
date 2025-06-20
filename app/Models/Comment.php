@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    public $fillable = ['comment', 'numberOfVotes', 'post_id', 'user_id'];
+    public $fillable = ['comment', 'number_of_votes', 'post_id', 'user_id'];
     public $table = 'comments';
 
     // Add the post relation

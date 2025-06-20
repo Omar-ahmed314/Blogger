@@ -22,9 +22,9 @@ class CommentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'postId' => 'required|exists:posts,id|integer',
-            'comment' => 'required_without_all:numberOfVotes|max:300',
-            'numberOfVotes' => 'required_without_all:comment|integer'
+            'post_id' => 'required|exists:posts,id|integer',
+            'comment' => 'required_without_all:number_of_votes|max:300',
+            'number_of_votes' => 'required_without_all:comment|integer'
         ];
     }
 }

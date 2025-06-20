@@ -25,9 +25,9 @@ class CommentsController extends Controller
     {
         $comment = Comment::create([
             'user_id' => Auth::user()->id,
-            'post_id' => $request->postId,
+            'post_id' => $request->post_id,
             'comment' => $request->comment,
-            'numberOfVotes' => $request->numberOfVotes
+            'number_of_votes' => $request->number_of_votes
         ]);
         $response = ['message' => "Comment Created Successfully", 'comment' => $comment];
         return response()->json($response, 201);
