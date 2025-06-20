@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller
 {
@@ -25,6 +26,7 @@ class PostsController extends Controller
     {
 
         $post = Post::create([
+            'user_id' => Auth::user()->id,
             'title' => $request->title,
             'description' => $request->description,
             'numberOfLikes' => $request->numberOfLikes
@@ -48,8 +50,14 @@ class PostsController extends Controller
      */
     public function update(PostRequest $request)
     {
-        $post = Post::findOrFail($request->id);
-        $post->update($request->all());
+        $validatedRequest = $request->validated();
+        $post = Post::findOrFail($validatedRequest->id);
+
+        // assure that post belongs to the requested user
+        if ($post->user_id != Auth::user()->id)
+            return response()->json(['message' => 'Unauthorized'], 403);
+
+        $post->update($validatedRequest);
         $response = ['message' => "Updated Successfully", 'post' => $post];
         return response()->json($response);
     }
@@ -70,6 +78,11 @@ class PostsController extends Controller
     public function destroy(string $id)
     {
         $post = Post::findOrFail($id);
+
+        // assure the user_id is requested user
+        if ($post->user_id != Auth::user()->id)
+            return response()->json(['message' => 'Unauthorized'], 403);
+
         $post->delete();
         $response = ['message' => "Deleted Successfully", 'post' => $post];
         return response()->json($response);
