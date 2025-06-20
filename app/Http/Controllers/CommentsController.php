@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentsController extends Controller
 {
@@ -24,6 +24,7 @@ class CommentsController extends Controller
     public function store(CommentRequest $request)
     {
         $comment = Comment::create([
+            'user_id' => Auth::user()->id,
             'post_id' => $request->postId,
             'comment' => $request->comment,
             'numberOfVotes' => $request->numberOfVotes
@@ -48,7 +49,12 @@ class CommentsController extends Controller
     public function update(CommentRequest $request)
     {
         $comment = Comment::findOrFail($request->id);
-        $comment->update($request->all());
+
+        // assure the user_id is requested user
+        if ($comment->user_id != Auth::user()->id)
+            return response()->json(['message' => 'Unauthorized'], 403);
+
+        $comment->update($request->validated());
         $response = ['message' => "Comment Updated Successfully", 'comment' => $comment];
         return response()->json($response);
     }
@@ -59,6 +65,11 @@ class CommentsController extends Controller
     public function destroy(string $id)
     {
         $comment = Comment::findOrFail($id);
+
+        // assure the user_id is requested user
+        if ($comment->user_id != Auth::user()->id)
+            return response()->json(['message' => 'Unauthorized'], 403);
+
         $comment->delete();
         $response = ['message' => "Comment Deleted Successfully", 'comment' => $comment];
         return response()->json($response);

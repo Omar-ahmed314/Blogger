@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('post_id')
                 ->constrained('posts')
                 ->cascadeOnDelete(); // This will delete all comments when the parent post is deleted
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->text('comment'); // changed from string to text for large content
             $table->integer('numberOfVotes');
             // $table->foreignId('user_id')->constrained()->onDelete('cascade');
