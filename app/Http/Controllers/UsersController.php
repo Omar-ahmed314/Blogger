@@ -32,8 +32,7 @@ class UsersController extends Controller
 
     public function logout(Request $request)
     {
-        $user = User::create($request->validated);
-        $response = ['message' => 'User has been registered successfully'];
-        return response()->json($response, 201);
+        $request->user()->currentAccessToken()->delete();
+        return response()->json(['message' => 'User logout successfully']);
     }
 }

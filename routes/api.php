@@ -13,7 +13,7 @@ Route::get('/user', function (Request $request) {
 // users routes
 Route::post('/signup', [UsersController::class, 'signup']);
 Route::post('/login', [UsersController::class, 'login']);
-Route::post('/logout', [UsersController::class, 'logout']);
+Route::post('/logout', [UsersController::class, 'logout'])->middleware('auth:sanctum');
 
 
 
