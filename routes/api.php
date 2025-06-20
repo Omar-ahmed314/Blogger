@@ -15,8 +15,7 @@ Route::post('/signup', [UsersController::class, 'signup']);
 Route::post('/login', [UsersController::class, 'login']);
 Route::post('/logout', [UsersController::class, 'logout'])->middleware('auth:sanctum');
 
-
-
+// posts routes
 Route::get('/post', [PostsController::class, 'index']);
 Route::post('/post', [PostsController::class, 'store']);
 Route::get('/post/{id}', [PostsController::class, 'show']);
