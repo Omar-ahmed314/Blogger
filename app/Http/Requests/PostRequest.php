@@ -22,9 +22,9 @@ class PostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required_without_all:description,numberOfLikes|string|max:100',
-            'description' => 'required_without_all:title,numberOfLikes|string|max:500',
-            'numberOfLikes' => 'required_without_all:title,description|integer'
+            'title' => 'required_without_all:description,number_of_likes|string|max:100',
+            'description' => 'required_without_all:title,number_of_likes|string|max:500',
+            'number_of_likes' => 'required_without_all:title,description|integer'
         ];
     }
 }

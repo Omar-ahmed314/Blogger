@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller
@@ -28,7 +27,7 @@ class PostsController extends Controller
             'user_id' => $request->user()->id,
             'title' => $request->title,
             'description' => $request->description,
-            'numberOfLikes' => $request->numberOfLikes
+            'number_of_likes' => $request->number_of_likes
         ]);
         $response = ['message' => "Created Successfully", 'post' => $post];
         return response()->json($response, 201);

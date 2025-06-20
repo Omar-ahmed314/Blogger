@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     public $table = 'posts';
-    public $fillable = ['title', 'description', 'numberOfLikes', 'user_id'];
+    public $fillable = ['title', 'description', 'number_of_likes', 'user_id'];
 
     public function comments()
     {

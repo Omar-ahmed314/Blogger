@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('title');
             $table->text('description'); // changed from string to text for large content
-            $table->integer('numberOfLikes');
+            $table->integer('number_of_likes');
         });
     }
 
