@@ -6,26 +6,27 @@ use App\Http\Controllers\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+// authenticatable routes
+Route::middleware('auth:sanctum')->group(function () {
+    // user routes
+    Route::post('/signup', [UsersController::class, 'signup']);
+    Route::post('/login', [UsersController::class, 'login']);
 
-// users routes
-Route::post('/signup', [UsersController::class, 'signup']);
-Route::post('/login', [UsersController::class, 'login']);
-Route::post('/logout', [UsersController::class, 'logout'])->middleware('auth:sanctum');
+    // posts routes
+    Route::get('/post', [PostsController::class, 'index']);
+    Route::get('/post/{id}', [PostsController::class, 'show']);
+    Route::get('/post/{id}/comment', [PostsController::class, 'getComments']);
 
-// posts routes
-Route::get('/post', [PostsController::class, 'index']);
+    // comments routes
+    Route::get('/comment', [CommentsController::class, 'index']);
+    Route::post('/comment', [CommentsController::class, 'store']);
+    Route::get('/comment/{id}', [CommentsController::class, 'show']);
+    Route::put('/comment', [CommentsController::class, 'update']);
+    Route::delete('/comment/{id}', [CommentsController::class, 'destroy']);
+});
+
+// publicaly accessable routes
+Route::post('/logout', [UsersController::class, 'logout']);
 Route::post('/post', [PostsController::class, 'store']);
-Route::get('/post/{id}', [PostsController::class, 'show']);
 Route::put('/post', [PostsController::class, 'update']);
 Route::delete('/post/{id}', [PostsController::class, 'destroy']);
-Route::get('/post/{id}/comment', [PostsController::class, 'getComments']);
-
-// comments routes
-Route::get('/comment', [CommentsController::class, 'index']);
-Route::post('/comment', [CommentsController::class, 'store']);
-Route::get('/comment/{id}', [CommentsController::class, 'show']);
-Route::put('/comment', [CommentsController::class, 'update']);
-Route::delete('/comment/{id}', [CommentsController::class, 'destroy']);
