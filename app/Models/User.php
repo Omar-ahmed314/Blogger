@@ -41,8 +41,10 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email',
+            'password' => 'required|hashed|confirmed', // password_confirmation field must be sent along with request
+            // password_confirmation => 'required|string' this just for illustration
         ];
     }
 }
