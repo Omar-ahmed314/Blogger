@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -9,8 +10,13 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+// users routes
+Route::post('/signup', [UsersController::class, 'signup']);
+Route::post('/login', [UsersController::class, 'login']);
+Route::post('/logout', [UsersController::class, 'logout']);
 
-// posts routes
+
+
 Route::get('/post', [PostsController::class, 'index']);
 Route::post('/post', [PostsController::class, 'store']);
 Route::get('/post/{id}', [PostsController::class, 'show']);
