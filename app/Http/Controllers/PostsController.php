@@ -24,14 +24,13 @@ class PostsController extends Controller
      */
     public function store(PostRequest $request)
     {
-
         $post = Post::create([
-            'user_id' => Auth::user()->id,
+            'user_id' => $request->user()->id,
             'title' => $request->title,
             'description' => $request->description,
             'numberOfLikes' => $request->numberOfLikes
         ]);
-        $response = ['message' => "Created Successfully", 'post', $post];
+        $response = ['message' => "Created Successfully", 'post' => $post];
         return response()->json($response, 201);
     }
 
@@ -50,14 +49,13 @@ class PostsController extends Controller
      */
     public function update(PostRequest $request)
     {
-        $validatedRequest = $request->validated();
-        $post = Post::findOrFail($validatedRequest->id);
+        $post = Post::findOrFail($request->id);
 
         // assure that post belongs to the requested user
         if ($post->user_id != Auth::user()->id)
             return response()->json(['message' => 'Unauthorized'], 403);
 
-        $post->update($validatedRequest);
+        $post->update($request->validated());
         $response = ['message' => "Updated Successfully", 'post' => $post];
         return response()->json($response);
     }
@@ -67,7 +65,7 @@ class PostsController extends Controller
      */
     public function getComments($id)
     {
-        $comments = Post::find($id)->comments;
+        $comments = Post::findOrFail($id)->comments;
         $response = ["comments" => $comments];
         return response()->json($response);
     }
