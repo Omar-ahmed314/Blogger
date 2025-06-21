@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PostsController extends Controller
 {
@@ -38,9 +39,13 @@ class PostsController extends Controller
      */
     public function show(string $id)
     {
-        $post = Post::findOrFail($id);
-        $response = ['post' => $post];
-        return response()->json($response);
+        try {
+            $post = Post::findOrFail($id);
+            $response = ['post' => $post];
+            return response()->json($response);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'The selected post id is invalid'], 404);
+        }
     }
 
     /**
@@ -64,9 +69,13 @@ class PostsController extends Controller
      */
     public function getComments($id)
     {
-        $comments = Post::findOrFail($id)->comments;
-        $response = ["comments" => $comments];
-        return response()->json($response);
+        try {
+            $comments = Post::findOrFail($id)->comments;
+            $response = ["comments" => $comments];
+            return response()->json($response);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'The selected post id is invalid'], 404);
+        }
     }
 
     /**
@@ -74,14 +83,18 @@ class PostsController extends Controller
      */
     public function destroy(string $id)
     {
-        $post = Post::findOrFail($id);
+        try {
+            $post = Post::findOrFail($id);
 
-        // assure the user_id is requested user
-        if ($post->user_id != Auth::user()->id)
-            return response()->json(['message' => 'Unauthorized'], 403);
+            // assure the user_id is requested user
+            if ($post->user_id != Auth::user()->id)
+                return response()->json(['message' => 'Unauthorized'], 403);
 
-        $post->delete();
-        $response = ['message' => "Deleted Successfully", 'post' => $post];
-        return response()->json($response);
+            $post->delete();
+            $response = ['message' => "Deleted Successfully", 'post' => $post];
+            return response()->json($response);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'The selected post id is invalid'], 404);
+        }
     }
 }
