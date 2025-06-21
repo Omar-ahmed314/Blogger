@@ -1,61 +1,85 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+[![Laravel](https://img.shields.io/badge/Laravel-10.x-red?logo=laravel)](https://laravel.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PHP](https://img.shields.io/badge/PHP-%3E=8.1-blue?logo=php)](https://www.php.net/)
+[![Herd](https://img.shields.io/badge/Herd-Used-green?logo=laravel)](https://herd.laravel.com/)
 </p>
 
-## About Laravel
+# Laravel Blog & Comments API
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This project is a simple Laravel-based API for managing blog posts and their comments. It demonstrates user authentication, CRUD operations for posts and comments, and relationship handling using Eloquent ORM. The API is designed for learning and as a starting point for more advanced Laravel applications.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   User registration and authentication
+-   Create, read, update, and delete blog posts
+-   Each post can have multiple comments
+-   Only the post owner can update or delete their posts
+-   API endpoints for posts and comments
+-   Validation using Form Requests
+-   Welcome email sent to new users
 
-## Learning Laravel
+## Installation Requirements
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+-   PHP >= 8.1
+-   Composer
+-   MySQL or SQLite
+-   [Herd](https://herd.laravel.com/) (recommended; used for constructing this application)
+-   Node.js & npm (for frontend assets, optional)
+-   [XAMPP](https://www.apachefriends.org/) or similar local server (optional)
+-   [Postman](https://www.postman.com/) (for testing API endpoints)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Installation Steps
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. **Clone the repository:**
+    ```bash
+    git clone <your-repo-url>
+    cd my-app
+    ```
+2. **Install PHP dependencies:**
+    ```bash
+    composer install
+    ```
+3. **Copy and configure environment file:**
+    ```bash
+    cp .env.example .env
+    # Edit .env to set your database credentials
+    ```
+4. **Generate application key:**
+    ```bash
+    php artisan key:generate
+    ```
+5. **Run migrations and seeders:**
+    ```bash
+    php artisan migrate --seed
+    ```
+6. **(Optional) Install frontend dependencies:**
+    ```bash
+    npm install && npm run dev
+    ```
+7. **Start the development server:**
+    ```bash
+    herd start
+    # or, if you prefer the built-in Laravel server:
+    php artisan serve
+    ```
 
-## Laravel Sponsors
+## API Functionality
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+-   **User Registration & Login:**
+    -   `POST /api/signup` — Register a new user and receive a welcome email
+    -   `POST /api/login` — Login and receive an authentication token
+    -   `POST /api/logout` — Logout the authenticated user
+-   **Posts:**
+    -   `GET /api/post` — List all posts
+    -   `POST /api/post` — Create a new post (auth required)
+    -   `GET /api/post/{id}` — Get a single post
+    -   `PUT /api/post` — Update a post (auth & ownership required)
+    -   `DELETE /api/post/{id}` — Delete a post (auth & ownership required)
+    -   `GET /api/post/{id}/comments` — List all comments for a post
+-   **Comments:**
+    -   `GET /api/comment` — List all comments
+    -   `POST /api/comment` — Create a comment (auth required)
+    -   `GET /api/comment/{id}` — Get a single comment
+    -   `PUT /api/comment` — Update a comment (auth & ownership required)
+    -   `DELETE /api/comment/{id}` — Delete a comment (auth & ownership required)
