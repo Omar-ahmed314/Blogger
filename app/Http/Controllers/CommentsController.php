@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 
 class CommentsController extends Controller
@@ -38,9 +40,13 @@ class CommentsController extends Controller
      */
     public function show(string $id)
     {
-        $comment = Comment::findOrFail($id);
-        $response = ['comment' => $comment];
-        return response()->json($response);
+        try {
+            $comment = Comment::findOrFail($id);
+            $response = ['comment' => $comment];
+            return response()->json($response);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'The selected comment id is invalid'], 404);
+        }
     }
 
     /**
@@ -64,14 +70,18 @@ class CommentsController extends Controller
      */
     public function destroy(string $id)
     {
-        $comment = Comment::findOrFail($id);
+        try {
+            $comment = Comment::findOrFail($id);
 
-        // assure the user_id is requested user
-        if ($comment->user_id != Auth::user()->id)
-            return response()->json(['message' => 'Unauthorized'], 403);
+            // assure the user_id is requested user
+            if ($comment->user_id != Auth::user()->id)
+                return response()->json(['message' => 'Unauthorized'], 403);
 
-        $comment->delete();
-        $response = ['message' => "Comment Deleted Successfully", 'comment' => $comment];
-        return response()->json($response);
+            $comment->delete();
+            $response = ['message' => "Comment Deleted Successfully", 'comment' => $comment];
+            return response()->json($response);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'The selected comment id is invalid'], 404);
+        }
     }
 }
