@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,12 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 // publicaly accessable routes
+
+// payment service
+Route::post('/payment/checkout', [PaymentController::class, 'checkout'])->name('payment.checkout');
+Route::post('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
+Route::post('/payment/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
+
 
 // user routes
 Route::post('/signup', [UsersController::class, 'signup']);
