@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
+use Nette\NotImplementedException;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
 
@@ -24,7 +25,7 @@ class PaymentController extends Controller
                     ]
                 ],
                 'mode' => 'subscription',
-                'success_url' => route('payment.success'),
+                'success_url' => route('payment.success') . '?session_id={CHECKOUT_SESSION_ID}',
                 'cancel_url' => route('payment.cancel'),
             ]);
 
@@ -34,7 +35,14 @@ class PaymentController extends Controller
         }
     }
 
-    public function success() {}
+    public function success(Request $request)
+    {
+        $session_id = $request->session_id;
+        return View('payments.success');
+    }
 
-    public function cancel() {}
+    public function cancel()
+    {
+        throw new NotImplementedException();
+    }
 }

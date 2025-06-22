@@ -28,8 +28,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
 // payment service
 Route::post('/payment/checkout', [PaymentController::class, 'checkout'])->name('payment.checkout');
-Route::post('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
-Route::post('/payment/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
+Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
+Route::get('/payment/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
 
 
 // user routes
