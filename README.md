@@ -21,11 +21,11 @@ This project is a simple Laravel-based API for managing blog posts and their com
 
 ## Installation Requirements
 
--   PHP >= 8.1
--   Composer
+-   PHP >= 8.4.8
+-   Composer >= 2.8.9
 -   MySQL or SQLite
 -   [Herd](https://herd.laravel.com/) (recommended; used for constructing this application)
--   Node.js & npm (for frontend assets, optional)
+-   Node.js (v22.14.0) & npm (10.9.2) (for frontend assets, optional)
 -   [XAMPP](https://www.apachefriends.org/) or similar local server (optional)
 -   [Postman](https://www.postman.com/) (for testing API endpoints)
 
