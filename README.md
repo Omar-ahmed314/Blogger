@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://laravel.com"><img src="https://img.shields.io/badge/Laravel-10.x-red?logo=laravel" alt="Laravel"></a>
+  <a href="https://laravel.com"><img src="https://img.shields.io/badge/Laravel-12.x-red?logo=laravel" alt="Laravel"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
   <a href="https://www.php.net/"><img src="https://img.shields.io/badge/PHP-%3E=8.1-blue?logo=php" alt="PHP"></a>
   <a href="https://herd.laravel.com/"><img src="https://img.shields.io/badge/Herd-Used-green?logo=laravel" alt="Herd"></a>
